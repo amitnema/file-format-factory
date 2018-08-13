@@ -7,22 +7,36 @@ import play.api.libs.json.JsValue
 import play.api.libs.json.Json
 import org.json.JSONObject
 
+object FileType {
+  final val Json = "json"
+  final val Dsv = "dsv"
+}
+
 object FileFormatFactory extends App {
-  assert(args.length > 4, "Please pass the arguments in order as 'java -jar file-format-factory-{version}.jar inFile inType outFile outType delimiter[OPTIONAL]'")
+  formatFile(args)
 
-  val inFile = args(0)
-  val inType = args(1)
-  val outFile = args(2)
-  val outType = args(3)
-  val delim = args(4)
-  val fff = new FileFormatFactory(inFile, outFile)
+  def formatFile(arguments: Array[String]) = {
+    require(arguments.length > 3, "Please pass the arguments in order as 'java -jar file-format-factory-{version}.jar inFile inType outFile outType delimiter[OPTIONAL]'")
 
-  inType match {
-    case "dsv" => fff.dsvToJson(delim)
-    case "json" => fff.jsonToDsv(delim)
-    case _ => ""
+    val inFile = arguments(0)
+    val inType = arguments(1)
+    val outFile = arguments(2)
+    val outType = arguments(3)
+
+    if (FileType.Dsv.equalsIgnoreCase(inType) || FileType.Dsv.equalsIgnoreCase(outType))
+      require(arguments.length > 4, "Please pass the arguments in order as 'java -jar file-format-factory-{version}.jar inFile inType outFile outType delimiter'" +
+        "\n Delimiter is required as either 'input type' or 'output type' is " + FileType.Dsv + ".")
+    val delim = arguments(4)
+
+    val fff = new FileFormatFactory(inFile, outFile)
+
+    inType match {
+      case FileType.Dsv => fff.dsvToJson(delim)
+      case FileType.Json => fff.jsonToDsv(delim)
+      case _ => ""
+    }
+    println(s"Please find the Output File $outFile.")
   }
-  println(s"Output File = $outFile.")
 }
 
 class FileFormatFactory(val inFile: String, val outFile: String) {
