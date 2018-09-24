@@ -4,7 +4,7 @@
 # File Format Factory
 
 ## Converts different file formats
-This is an api useful to convert the different version of files. Currently supported version are json to dsv (delimeter seperated values) and vice-versa.
+This is an api useful to convert the different version of files. Currently supported version are json to dsv (delimiter separated values) and vice-versa.
 
 ## Build the Source
 Run the following command in the workspace
@@ -18,7 +18,7 @@ e.g.
 
 	java -jar file-format-factory-1.0.0-jar-with-dependencies.jar /tmp/data/data.json json /tmp/data/data.csv dsv ,
 
-Above command will convert the json fiel into the CSV format.
+Above command will convert the json file into the CSV format.
 
 #### File Types
 *   dsv
@@ -26,4 +26,3 @@ Above command will convert the json fiel into the CSV format.
 
 
 Note: delimiter argument is required, if one of the file type is dsv (delimited separated values).
-
