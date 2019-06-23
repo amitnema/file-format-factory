@@ -3,4 +3,4 @@ language: java
 addons:
   apt:
     packages:
-      - oracle-java8-installer
+      - open-java8-installer
